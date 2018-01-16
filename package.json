@@ -1,0 +1,42 @@
+{
+  "name": "elasticexplorer",
+  "version": "1.0.0",
+  "description": "Simple elasticsearch data explorer (gui)",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itemsapi/elasticexplorer.git"
+  },
+  "keywords": [
+    "elasticsearch",
+    "gui",
+    "data",
+    "explorer",
+    "facets",
+    "filters",
+    "search",
+    "ui"
+  ],
+  "author": "Mateusz Rzepa",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/itemsapi/elasticexplorer/issues"
+  },
+  "homepage": "https://github.com/itemsapi/elasticexplorer#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "config": "^1.29.2",
+    "elasticitems": "^1.0.10",
+    "express": "^4.16.2",
+    "js-yaml": "^3.10.0",
+    "lodash": "^4.17.4",
+    "nunjucks": "^3.0.1",
+    "urijs": "^1.19.0",
+    "winston": "^2.4.0"
+  }
+}

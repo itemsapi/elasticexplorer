@@ -1,0 +1,47 @@
+{% for val in (aggregations | sortObject('position', 'desc')) %}
+
+<div class="">
+
+  {% if not in_array(aggregations[val.key].name, ['empty_tags']) %}
+
+  <h5 class="facet-name" style="margin-bottom: 5px; text-decoration: none;"><a href="#"><strong>{{ aggregations[val.key].title }} <i class="fa fa-angle-down" aria-hidden="true"></i></strong></a></h5>
+
+  <div class="facet-content" style="{% if in_array(aggregations[val.key].name, facets_open) %} display: block;{% endif %}">
+    {% if in_array(aggregations[val.key].name, ['tags']) %}
+    <div class="input-group" style="margin: 5px 0 5px 0;">
+      <input id="aggregation_autocomplete_{{ aggregations[val.key].name }}" type="text" style="height: 25px;" value="" class="form-control aggregation_autocomplete" placeholder="Search.." name="srch-term">
+    </div>
+    {% endif %}
+
+    <ul class="browse-list list-unstyled long-list" style="margin-bottom: 0;">
+      {% for term in aggregations[val.key].buckets %}
+      <li>
+      <div class="checkbox block" style="margin-top: 0; margin-bottom: 0;">
+        <label>
+          <input class="checkbox aggregation-box" type="checkbox" {% if (filter and filter.val == term.key and filter.key == val.key) or in_array(term.key, filters[val.key]) %}checked="checked"{% endif %} onclick="onAggregationClick(this, '{{aggregations[val.key].name}}', '{{ term.key }}');">
+          {{ term.key }} ({{ term.doc_count }}) {% if 1 or in_array(aggregations[val.key].name, ['tags']) %}<a href="#" onclick="addNotFilter('{{aggregations[val.key].name}}', '{{ term.key }}'); return false;"><span class="text-muted">x</span></a>{% endif %}
+        </label>
+      </div>
+      </li>
+      {% endfor %}
+
+      {% if in_array(aggregations[val.key].name, ['tags', 'country']) %}
+      {% set facet_key = 'empty_' + aggregations[val.key].name %}
+      {% set empty_value = 'empty' %}
+
+      <li>
+      <div class="checkbox block text-muted" style="margin-top: 0; margin-bottom: 0;">
+        <label>
+          <input class="checkbox" type="checkbox" {% if (filter and filter.val == empty_value and filter.key == facet_key) or in_array(empty_value, filters[facet_key]) %}checked="checked"{% endif %} onclick="onAggregationClick(this, '{{aggregations[facet_key].name}}', '{{ empty_value }}');">
+          Show empty ({{ aggregations[facet_key].doc_count }})
+        </label>
+      </div>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="clearfix"></div>
+
+  {% endif %}
+</div>
+{% endfor %}

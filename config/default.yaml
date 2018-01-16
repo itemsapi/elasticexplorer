@@ -1,0 +1,13 @@
+elasticsearch:
+  host: localhost:9200
+  index: items
+  type: items
+search:
+  aggregations:
+    categories: 
+      size: 10
+      field: categories
+      position: 90
+      conjunction: true
+      type: terms
+      title: Categories

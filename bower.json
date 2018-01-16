@@ -1,0 +1,28 @@
+{
+  "name": "elasticexplorer",
+  "description": "",
+  "authors": [
+    "Mateusz Rzepa"
+  ],
+  "keywords": [],
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "urijs": "^1.18.2",
+    "history.js": "^1.8.0",
+    "lodash": "^4.17.2",
+    "jquery-ui": "^1.12.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "jquery#^1.9.1",
+    "bootstrap": "^3.3.7",
+    "jquery-tagit": "*"
+  }
+}

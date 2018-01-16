@@ -1,0 +1,94 @@
+{% if is_ajax == false %}
+  {% extends "views/layout.html.twig" %}
+{% endif %}
+
+{% block content %}
+
+<div class="page-header" style="margin-top: 0;">
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group">
+    </div>
+  </div>
+  <h2 style="margin-top: 0;">Items ({{pagination.total}})</h2>
+</div>
+
+<div class="">
+
+  <div class="col-md-2" id="aggregations" style="padding-left: 0;">
+    {% include "views/aggregations.html.twig" %}
+  </div>
+  <div class="col-md-10" style="padding-right: 0;">
+
+    {% include "views/breadcrumbs.html.twig" %}
+
+    <div class="clearfix"></div>
+
+    <table class="table table-striped table-items">
+    <thead>
+      <tr>
+        <th>Title</th>
+      </tr>
+    </thead>
+      <tbody>
+      {% for item in items %}
+      <tr data-toggle="collapse" data-target="#item{{ loop.index }}" data-id="{{ item.id }}">
+        <td>{{ item.title }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+
+    <div class="clearfix">
+    </div>
+    {% include "views/pagination.html.twig" %}
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block before_head_end %}
+<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/start/jquery-ui.css" />
+{% endblock %}
+
+{% block before_body_end %}
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
+
+<script>
+  $(function() {
+
+    {% for name in ['tags', 'country', 'city', 'source', 'created_month', 'categories'] %}
+
+    $("#aggregation_autocomplete_{{ name }}").autocomplete({
+      minLength: 0,
+      source: function(request, response) {
+
+        $.ajax({
+          url: '/facet/{{ name}}',
+          //dataType: 'jsonp',
+          data: {
+            query: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        });
+      },
+      select: function(event, ui) {
+        aggregationTrigger('{{ name }}', ui.item.label);
+        return false;
+      }
+    })
+
+    {% endfor %}
+  });
+</script>
+
+{% endblock %}
